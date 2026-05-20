@@ -1,4 +1,531 @@
----
-layout: home
-title: ""
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Livelycow Blog - learning programming, systems, projects, and experiments." />
+  <title>Livelycow Blog</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: rgba(15, 23, 42, 0.82);
+      --panel-solid: #111827;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --brand: #38bdf8;
+      --brand-2: #a78bfa;
+      --border: rgba(148, 163, 184, 0.24);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent 34rem),
+        radial-gradient(circle at top right, rgba(167, 139, 250, 0.18), transparent 32rem),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(15, 23, 42, 0.72);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      font-size: 1.2rem;
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      display: grid;
+      place-items: center;
+      color: #020617;
+      font-weight: 900;
+      box-shadow: 0 12px 28px rgba(56, 189, 248, 0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .hero {
+      padding: 88px 0 56px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--brand);
+      background: rgba(56, 189, 248, 0.08);
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+      margin-bottom: 24px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #e0f2fe, #38bdf8, #a78bfa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.12rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      font-weight: 800;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    .button.primary {
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: #020617;
+      border: none;
+    }
+
+    .hero-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .terminal {
+      background: #020617;
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      display: flex;
+      gap: 8px;
+      padding: 14px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--muted);
+      opacity: 0.8;
+    }
+
+    .terminal-body {
+      padding: 18px;
+      color: #bae6fd;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.92rem;
+    }
+
+    .terminal-body span {
+      color: #c084fc;
+    }
+
+    section {
+      padding: 54px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .section-title p {
+      color: var(--muted);
+      max-width: 460px;
+    }
+
+    .posts {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .post-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      background: rgba(15, 23, 42, 0.68);
+      min-height: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .post-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.45);
+      background: rgba(15, 23, 42, 0.92);
+    }
+
+    .tag {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(167, 139, 250, 0.12);
+      color: #ddd6fe;
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .post-card h3 {
+      font-size: 1.3rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+
+    .post-card p {
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .post-meta {
+      color: var(--brand);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 18px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: rgba(15, 23, 42, 0.68);
+      padding: 24px;
+    }
+
+    .stats {
+      display: grid;
+      gap: 14px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(148, 163, 184, 0.14);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.8rem;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat span,
+    .panel p,
+    .panel li {
+      color: var(--muted);
+    }
+
+    .panel ul {
+      margin-top: 14px;
+      padding-left: 20px;
+    }
+
+    .newsletter {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(2, 6, 23, 0.65);
+      color: var(--text);
+      outline: none;
+    }
+
+    input:focus {
+      border-color: rgba(56, 189, 248, 0.65);
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 820px) {
+      .hero-grid,
+      .about-grid,
+      .posts,
+      .newsletter {
+        grid-template-columns: 1fr;
+      }
+
+      .nav {
+        align-items: flex-start;
+        gap: 16px;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+      }
+
+      .hero {
+        padding-top: 54px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#top" class="logo" aria-label="Livelycow Blog home">
+        <span class="logo-mark">LC</span>
+        <span>Livelycow Blog</span>
+      </a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#posts">Posts</a>
+        <a href="#about">About</a>
+        <a href="https://github.com/livelycow" target="_blank" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Learning log • Projects • Programming</div>
+          <h1>Building skills, breaking things, then fixing them better.</h1>
+          <p>
+            A clean personal blog for documenting programming lessons, experiments,
+            projects, and the tiny victories that happen between errors, bugs, and coffee.
+          </p>
+          <div class="hero-actions">
+            <a href="#posts" class="button primary">Read the blog</a>
+            <a href="https://github.com/livelycow/livelycow.github.io" target="_blank" rel="noopener" class="button">View source</a>
+          </div>
+        </div>
+
+        <aside class="hero-card" aria-label="Code preview card">
+          <div class="terminal">
+            <div class="terminal-bar">
+              <span class="dot"></span>
+              <span class="dot"></span>
+              <span class="dot"></span>
+            </div>
+            <div class="terminal-body">
+              <p><span>$</span> git commit -m "fixed the blog"</p>
+              <p><span>$</span> git push origin main</p>
+              <p><span>✓</span> deployed to GitHub Pages</p>
+              <br />
+              <p>// Progress is just organized chaos.</p>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="posts">
+      <div class="container">
+        <div class="section-title">
+          <h2>Latest posts</h2>
+          <p>Replace these sample cards with your real posts as you keep learning.</p>
+        </div>
+
+        <div class="posts">
+          <article class="post-card">
+            <div>
+              <span class="tag">Programming</span>
+              <h3>What I learned this week</h3>
+              <p>A quick recap of concepts, tools, and mistakes that taught me something useful.</p>
+            </div>
+            <a class="post-meta" href="#">Read post →</a>
+          </article>
+
+          <article class="post-card">
+            <div>
+              <span class="tag">Project</span>
+              <h3>My first portfolio update</h3>
+              <p>Documenting the changes I made, the bugs I hit, and how I improved the design.</p>
+            </div>
+            <a class="post-meta" href="#">Read post →</a>
+          </article>
+
+          <article class="post-card">
+            <div>
+              <span class="tag">Notes</span>
+              <h3>Useful commands I keep forgetting</h3>
+              <p>A practical cheat sheet for Git, terminal commands, and setup fixes.</p>
+            </div>
+            <a class="post-meta" href="#">Read post →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-grid">
+        <div class="panel stats">
+          <div class="stat">
+            <strong>01</strong>
+            <span>Goal: keep learning consistently.</span>
+          </div>
+          <div class="stat">
+            <strong>∞</strong>
+            <span>Bugs available, because software is rude.</span>
+          </div>
+          <div class="stat">
+            <strong>100%</strong>
+            <span>Built for simple GitHub Pages hosting.</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>About this blog</h2>
+          <p>
+            Livelycow Blog is a space to track programming progress, write notes,
+            share projects, and build confidence by publishing the learning journey.
+          </p>
+          <ul>
+            <li>Post programming notes and weekly learning updates.</li>
+            <li>Showcase personal projects and experiments.</li>
+            <li>Keep everything simple, fast, and easy to maintain.</li>
+          </ul>
+
+          <form class="newsletter" onsubmit="event.preventDefault(); alert('Newsletter demo only. Connect a service later.');">
+            <input type="email" placeholder="Email signup demo" aria-label="Email address" />
+            <button class="button primary" type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="year"></span> Livelycow Blog. Built with plain HTML, CSS, and stubborn optimism.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
